@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A universe for AGGNI 🎀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      overflow: hidden;
+      background: radial-gradient(circle at top, #1b2735, #090a0f);
+      height: 100vh;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 2s ease;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #5d0d25, #ffd6e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 25px rgba(255,255,255,0.2);
+    }
+
+    .typing {
+      font-size: 1.3rem;
+      min-height: 50px;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: 0.4s;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    button:hover {
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .hidden-message {
+      margin-top: 25px;
+      opacity: 0;
+      transition: 1s ease;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #ffe5ec;
+    }
+
+    .show {
+      opacity: 1;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255,255,255,0.7);
+      animation: float 6s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .music-note {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="center">
+  <h1><br>Hey AGGNI 🎀</h1>
+  <div class="typing" id="typing"></div>
+
+  <button onclick="revealMessage()"> Click to see a surprise ❤️</button>
+
+  <div class="hidden-message" id="message">
+Sometimes life becomes really heavy,<br>
+and people slowly stop saying what they truly feel.<br>
+
+So I just want you to know this <br>
+you never have to pretend around me.<br>
+
+Whether you’re happy, confused, tired,<br>
+overthinking, angry, or completely silent…<br>
+I’ll still listen the same way.<br>
+
+And honestly,<br>
+talking to you has become one of the calmest parts of my days.<br>
+
+No pressure, no expectations.<br>
+Just a comfort zone you can always come back to.
+  </div>
+</div>
+
+<div class="music-note">
+  🎵 <a href="https://youtu.be/zaFGQEIcetM?si=laNY93lkTHQH4vej" target="_blank" style="color: inherit; text-decoration: none;">
+    Best experienced with soft music
+  </a>
+</div>
+
+<script>
+  // Typing Effect
+  const text = "Some people feel like home even from miles away.";
+  let i = 0;
+  const speed = 55;
+
+  function typingEffect() {
+    if (i < text.length) {
+      document.getElementById('typing').innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typingEffect, speed);
+    }
+  }
+
+  typingEffect();
+
+  // Reveal Message
+  function revealMessage() {
+    document.getElementById('message').classList.add('show');
+  }
+
+  // Floating Hearts
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '❤';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+    heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000);
+  }
+
+  setInterval(createHeart, 350);
+
+  // Stars Background
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const stars = [];
+
+  for (let i = 0; i < 250; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      speed: Math.random() * 0.5
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'white';
+
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      star.y += star.speed;
+
+      if (star.y > canvas.height) {
+        star.y = 0;
+        star.x = Math.random() * canvas.width;
+      }
+    });
+
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
